@@ -35,7 +35,7 @@ This prompts ChatGPT like this:
     }
     ```
     
-The output is a JSON object that contains the newly-defined interfaces as well as the existing code with type annotations added:
+The output is the new code should replace the old code. It contains the newly-defined interfaces as well as the existing code with type annotations added:
 
 ``` ts
 // new types:
@@ -59,8 +59,14 @@ function parseLogsFromCsv(text: string): Log[] {
 
 ## Future Work
 
+For Hackathon: 
+- [x] Get chatGPT to not modify or improve existing code.
+- [ ] Parse out only code, or get chatGPT to return only code.
+- [ ] Parse out new code from existing code. (probably not needed)
+
+For later:
 I intend to integrate the feature into VSCode's Copilot.
-This will make it available as a single command in VSCode which uses the current selection to specify which code to annotate.
-It will also let VSCode suggest the command when a file is renamed from .js to .ts extensions.
-And it will let people have a conversation with ChatGPT to refine the generated code.
+- [ ] This will make it available as a single command in VSCode which uses the current selection to specify which code to annotate.
+- [ ] It will also let VSCode suggest the command when a file is renamed from .js to .ts extensions.
+- [ ] And it will let people have a conversation with ChatGPT to refine the generated code.
 
