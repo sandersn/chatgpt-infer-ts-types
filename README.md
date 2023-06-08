@@ -10,21 +10,17 @@ Fortunately, ChatGPT is **really** good at working with Typescript types, and in
 
 ## Prototype
 
-The initial prototype doesn't rely on API calls because I don't have access to those yet.
-Here's the process:
-
-1. Produce a query using a script:
-
 ```sh
-$ node query.js ~/src/example/test.js 0 100
+$ node dist/infer.js ~/src/example/test.js 0 100
 ```
 
 The numeric parameters specify the start and end locations of the file to use.
 If they're left off the whole file is provided.
 
-This prints a query like this:
+This prompts ChatGPT like this:
 
-    I wrote the following Javascript code:
+    I wrote the following Javascript code.
+    Can you suggest Typescript types for it? I'd like standalone interfaces if possible.
     
     ```
     function parseLogsFromCsv(text) {
@@ -39,17 +35,7 @@ This prints a query like this:
     }
     ```
     
-    Can you suggest Typescript types for it? I'd like standalone interfaces if possible.
-
-2. Paste the query into ChatGPT and copy the result into a file.
-
-3. Pass the new file into a second script:
-
-``` sh
-$ node parse.js ~/src/example/output.txt
-```
-
-This prints a JSON object that contains the newly-defined interfaces as well as the existing code with type annotations added:
+The output is a JSON object that contains the newly-defined interfaces as well as the existing code with type annotations added:
 
 ``` ts
 // new types:
@@ -73,8 +59,7 @@ function parseLogsFromCsv(text: string): Log[] {
 
 ## Future Work
 
-After the manual prototype, the next step is to use the ChatGPT API to package the above process in a single script.
-After that, I intend to integrate the feature into VSCode's Copilot.
+I intend to integrate the feature into VSCode's Copilot.
 This will make it available as a single command in VSCode which uses the current selection to specify which code to annotate.
 It will also let VSCode suggest the command when a file is renamed from .js to .ts extensions.
 And it will let people have a conversation with ChatGPT to refine the generated code.

@@ -1,0 +1,23 @@
+{
+  "name": "chatgpt-infer-ts-types",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Use ChatGPT to infer TS types from JS",
+  "main": "dist/infer.js",
+  "scripts": {
+    "test": "dist/infer.js example1.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandersn/chatgpt-infer-ts-types.git"
+  },
+  "author": "Nathan Shively-Sanders",
+  "homepage": "https://github.com/sandersn/chatgpt-infer-ts-types#readme",
+  "dependencies": {
+    "@azure/openai": "^1.0.0-beta.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "typescript": "^5.1.3"
+  }
+}
