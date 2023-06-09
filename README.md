@@ -68,8 +68,8 @@ function parseLogsFromCsv(text: string): Log[] {
 
 For Hackathon: 
 - [x] Get chatGPT to not modify or improve existing code.
-- [ ] Parse out only code, or get chatGPT to return only code.
-- [ ] This probably works for Python (and Ruby, PHP, Racket) too -- try it out. (I'll need to change the wording of the prompt slightly)
+- [x] Parse out only code, or get chatGPT to return only code.
+- [x] This probably works for Python (and Ruby, PHP, Racket) too -- try it out. (I'll need to change the wording of the prompt slightly)
 - [ ] Parse out new code from existing code. (probably not needed)
 
 For later:
@@ -98,5 +98,5 @@ The prototype is simple: query ChatGPT and post-process the result slightly.
 
 ### Demo
 
-- Video: https://microsoft-my.sharepoint.com/:v:/p/nathansa/EfnGth25hbpItguKv96VyEYBQks8oj_KT0HBhHk2iDMSDg?e=WUFv5Y
+- Video: https://microsoft-my.sharepoint.com/:v:/p/nathansa/EZhZglCHg7FFmFZTcyKMHl8BM0xgNnbhfATdvQswiyAXhA?e=CIWxNE
 - Repo: https://github.com/sandersn/chatgpt-infer-ts-types

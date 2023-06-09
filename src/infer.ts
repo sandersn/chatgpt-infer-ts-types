@@ -6,21 +6,19 @@ const client = new OpenAIClient(
   new AzureKeyCredential(process.env.OPENAI_API_KEY!),
   { apiVersion: "2023-03-15-preview" }
 );
-  // TODO:
-  // parse out code if there is a code fence
-  // try gpt-35-turbo, gpt-4 to see if those work better (although 3.5 works fine so w/e)
-  // code-davinci-002 is recommended by the ai studio playground
-  // try Python
 async function main() {
   let content = fs.readFileSync(process.argv[2], 'utf8');
+  const ext = process.argv[2].split('.').pop()!;
   if (process.argv[3] && process.argv[4])
     content = content.slice(+process.argv[3], +process.argv[4]);
   const systemPrompt = `
-I wrote the following Javascript code. 
-Can you suggest Typescript types for it? I'd like standalone interfaces if possible.
+I wrote the following ${ext === 'py' ? "Python" : "Javascript"} code. 
+Can you suggest ${ext === 'py' ? "" : "Typescript"} types for it? I'd like standalone interfaces if possible.
 Do not change the existing code except to add types.`;
   const result = await client.getChatCompletions(
-    "gpt-35",
+     "gpt-35",
+    // OR
+    // "code-davinci-002", (note: doesn't work on the hackathon API key)
     [
       { role: "system", content: systemPrompt },
       { role: "user", content } 
@@ -35,7 +33,17 @@ Do not change the existing code except to add types.`;
   );
   console.log("Received", result.choices.length, "choices")
   assert(result.choices[0].message?.role === "assistant")
-  console.log(result.choices[0].message?.content)
+  let output = result.choices[0].message?.content
+  if (!output) {
+    throw new Error("no output")
+  }
+  const startFence = output.indexOf("```")
+  if (startFence > -1) {
+    const endFence = output.indexOf("```", startFence + 3)
+    console.log("Code fence in output, removing")
+    output = output.slice(startFence + 3, endFence === -1 ? undefined : endFence)
+  }
+  console.log(output)
 }
 main().catch(err => { 
   console.error(err)
