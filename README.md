@@ -3,10 +3,19 @@
 Use ChatGPT to infer Typescript types from Javascript code
 
 People converting from Javascript to Typescript end up with a lot of `any` types, many of them implicit.
-They don't get much value from the Typescript conversion.
+They don't get much value from switching to Typescript.
 Even after they add annotation for primitive types like `string` and `number[]`, they need to create interfaces to capture their complex data.
 This is a difficult step for people who have never created a type before &mdash; their knowledge of types is implicit.
 Fortunately, ChatGPT is **really** good at working with Typescript types, and inferring them from various kinds of input.
+
+## Build
+
+
+```sh
+$ export OPENAI_API_KEY=(key goes here)
+$ npm ci
+$ npm test
+```
 
 ## Prototype
 
@@ -14,8 +23,8 @@ Fortunately, ChatGPT is **really** good at working with Typescript types, and in
 $ node dist/infer.js ~/src/example/test.js 0 100
 ```
 
-The numeric parameters specify the start and end locations of the file to use.
-If they're left off the whole file is provided.
+The numeric parameters specify the start and end character locations inside the file.
+If they're left off the whole file is used.
 
 This prompts ChatGPT like this:
 
@@ -38,13 +47,11 @@ This prompts ChatGPT like this:
 The output is the new code should replace the old code. It contains the newly-defined interfaces as well as the existing code with type annotations added:
 
 ``` ts
-// new types:
 interface Log {
     timestamp: string;
     level: string;
     message: string;
 }
-// updated code (though only four lines change):
 function parseLogsFromCsv(text: string): Log[] {
     const lines: string[] = text.split('\n');
     const logs: Log[] = [];
@@ -62,6 +69,7 @@ function parseLogsFromCsv(text: string): Log[] {
 For Hackathon: 
 - [x] Get chatGPT to not modify or improve existing code.
 - [ ] Parse out only code, or get chatGPT to return only code.
+- [ ] This probably works for Python (and Ruby, PHP, Racket) too -- try it out. (I'll need to change the wording of the prompt slightly)
 - [ ] Parse out new code from existing code. (probably not needed)
 
 For later:
@@ -70,3 +78,25 @@ I intend to integrate the feature into VSCode's Copilot.
 - [ ] It will also let VSCode suggest the command when a file is renamed from .js to .ts extensions.
 - [ ] And it will let people have a conversation with ChatGPT to refine the generated code.
 
+## For Hackathon Submission
+
+Convert Javascript to Typescript
+
+### Description
+
+Convert Javascript code to Typescript:
+- add types to existing code
+- define types for complex data structures
+
+The prototype is simple: query ChatGPT and post-process the result slightly.
+
+### Prospects
+
+- Increase usage of Typescript and Visual Studio.
+- Help people get ongoing value out of switching to Typescript.
+- Help people learn--by example--how to come up with types for their code.
+
+### Demo
+
+- Video: https://microsoft-my.sharepoint.com/:v:/p/nathansa/EfnGth25hbpItguKv96VyEYBQks8oj_KT0HBhHk2iDMSDg?e=WUFv5Y
+- Repo: https://github.com/sandersn/chatgpt-infer-ts-types

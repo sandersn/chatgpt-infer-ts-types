@@ -6,14 +6,15 @@ const client = new OpenAIClient(
   new AzureKeyCredential(process.env.OPENAI_API_KEY!),
   { apiVersion: "2023-03-15-preview" }
 );
-
+  // TODO:
+  // parse out code if there is a code fence
+  // try gpt-35-turbo, gpt-4 to see if those work better (although 3.5 works fine so w/e)
+  // code-davinci-002 is recommended by the ai studio playground
+  // try Python
 async function main() {
   let content = fs.readFileSync(process.argv[2], 'utf8');
   if (process.argv[3] && process.argv[4])
     content = content.slice(+process.argv[3], +process.argv[4]);
-  // TODO:
-  // 1. request labelling of new types versus editted code
-  // 2. request no other changes to code
   const systemPrompt = `
 I wrote the following Javascript code. 
 Can you suggest Typescript types for it? I'd like standalone interfaces if possible.
