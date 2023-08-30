@@ -4,8 +4,10 @@
         "moduleResolution": "nodenext",
         "outDir": "dist",
         "strict": true,
+        "checkJs": true,
+        "allowJs": true
     },
     "files": [
-        "src/infer.ts"
+        "src/infer.ts", "example3.ts", "example2.js"
     ]
 }
