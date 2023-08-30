@@ -8,3 +8,34 @@ function parseLogsFromCsv(text) {
   }
   return logs;
 }
+
+/**
+ * @template T
+ * @typedef {(t: T) => boolean} Predicate
+ */
+
+/**
+ * @template T
+ * @param {T[]} xs 
+ * @param {Predicate<T>} yes 
+ * @param {(t: T) => boolean} no 
+ */
+function trifilter(xs, yes, no) {
+  let yeses = []
+  let nos = []
+  let maybes = []
+  for (const x of xs) {
+    if (yes(x)) {
+      yeses.push(x)
+    } else if (no(x)) {
+      nos.push(x)
+    } else {
+      maybes.push(x)
+    }
+  }
+  return [yeses, nos, maybes]
+}
+
+function extractTypedef() {
+  
+}

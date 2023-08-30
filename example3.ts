@@ -83,12 +83,46 @@ function showEarliestSubscriber(subs: Subscriber[]) {
   }
   return formatted
 }
-function extractLocal() {
-
+interface Node<T> {
+  value: T
+  children: Node<T>[]
 }
-class ExtractLocal() {
-  extractLocal() {
-
+/** this is a test of the extract local refactor
+ * 
+ * Finds all nodes in the tree that match and returns an array of them.
+ * I don't think extracting the locals improves the readability but 
+ */
+function findAllTree<T>(root: Node<T>, predicate: (t: T) => boolean): Node<T>[] {
+  return [
+    ...(predicate(root.value) ? [root] : []), 
+    ...root.children.flatMap(child => findAllTree(child, predicate))
+  ]
+}
+/**
+ * this is a test of the extract local and extract type refactors
+ * 
+ * PosNode is a node that has a start and end position.
+ * find finds a node whose span covers a given position.
+ */
+class PosNode implements Node<{ start: number, end: number }> {
+  value: { start: number, end: number}
+  children: PosNode[]
+  constructor(value: { start: number, end: number}, children: PosNode[]) {
+    this.value = value
+    this.children = children
+  }
+  find(pos: number): PosNode | undefined {
+    if (this.value.start <= pos && pos < this.value.end) {
+      return this
+    }
+    else {
+      for (const child of this.children) {
+        if (child.value.start <= pos && pos < child.value.end) {
+          return child.find(pos)
+        }
+      }
+      return undefined
+    }
   }
 }
 function extractTypeAlias() {
