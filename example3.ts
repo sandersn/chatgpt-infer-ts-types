@@ -83,69 +83,20 @@ function showEarliestSubscriber(subs: Subscriber[]) {
   }
   return formatted
 }
-interface Node<T> {
-  value: T
-  children: Node<T>[]
-}
-/** this is a test of the extract local refactor
+/** This a test of the implement-missing-function codefix
  * 
- * Finds all nodes in the tree that match and returns an array of them.
- * I don't think extracting the locals improves the readability but 
+ * It asks copilot to provide an implementation of findFollowersExcept.
  */
-function findAllTree<T>(root: Node<T>, predicate: (t: T) => boolean): Node<T>[] {
-  return [
-    ...(predicate(root.value) ? [root] : []), 
-    ...root.children.flatMap(child => findAllTree(child, predicate))
-  ]
+const testSubscribers: Subscriber[] = []
+const channel: Channel = {
+  id: 11001,
+  name: "TypeScript",
+  url: new URL("https://www.youtube.com/channel/TYPESCRIPT_URL"),
+  subscribers: testSubscribers
 }
-/**
- * this is a test of the extract local and extract type refactors
- * 
- * PosNode is a node that has a start and end position.
- * find finds a node whose span covers a given position.
+showEarliestSubscriber(findMatchingFollowers(channel, testSubscribers));
+
+/** This is a test of suggesting names for just-generated parameter names
+ * (It only works one-at-a-time currently, and desn't pop a rename interface)
  */
-class PosNode implements Node<{ start: number, end: number }> {
-  value: { start: number, end: number}
-  children: PosNode[]
-  constructor(value: { start: number, end: number}, children: PosNode[]) {
-    this.value = value
-    this.children = children
-  }
-  find(pos: number): PosNode | undefined {
-    if (this.value.start <= pos && pos < this.value.end) {
-      return this
-    }
-    else {
-      for (const child of this.children) {
-        if (child.value.start <= pos && pos < child.value.end) {
-          return child.find(pos)
-        }
-      }
-      return undefined
-    }
-  }
-}
-function extractTypeAlias() {
-
-}
-function extractInterface() {
-
-}
-function nameInferredReturnType() {
-
-}
-type NameDefaultedParameters = (string, string) => [string, string]
-implementMissingFunction(extractFunction, 101)
-
-abstract class Base {
-
-}
-interface Specification {
-
-}
-class ImplementAbstractMethod extends Base {
-
-}
-class ImplementSpecification implements Specification {
-
-}
+type ChannelConstructor = (number, string, URL) => Channel
