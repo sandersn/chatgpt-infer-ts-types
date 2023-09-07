@@ -69,12 +69,12 @@ interface Subscriber {
  * Then it transforms that to a formatted list.
  */
 function showEarliestSubscriber(subs: Subscriber[]) {
-  let earliest = subs[0]
-  let earliestId = Number.MAX_SAFE_INTEGER
+  let earliest = subs[0];
+  let earliestId = Number.MAX_SAFE_INTEGER;
   for (const sub of subs) {
     if (sub.id < earliestId) {
-      earliest = sub
-      earliestId = sub.id
+      earliest = sub;
+      earliestId = sub.id;
     }
   }
   let formatted = `${earliest.name} <${earliest.email}>`
@@ -83,6 +83,7 @@ function showEarliestSubscriber(subs: Subscriber[]) {
   }
   return formatted
 }
+
 /** This a test of the implement-missing-function codefix
  * 
  * It asks copilot to provide an implementation of findFollowersExcept.
@@ -97,6 +98,6 @@ const channel: Channel = {
 showEarliestSubscriber(findMatchingFollowers(channel, testSubscribers));
 
 /** This is a test of suggesting names for just-generated parameter names
- * (It only works one-at-a-time currently, and desn't pop a rename interface)
+ * (It's only offered for the one-at-a-time fix, but usually renames everything anyway)
  */
 type ChannelConstructor = (number, string, URL) => Channel

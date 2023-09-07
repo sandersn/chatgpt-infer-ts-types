@@ -23,8 +23,13 @@ export function findAllTree<T>(root: Node<T>, predicate: (t: T) => boolean): Nod
     ]
 }
 
+type Position = {
+    start: number;
+    end: number;
+};
+
 /**
- * this is a test of the extract local and extract type refactors
+ * this is a test of the extract interface/extract type refactors
  * 
  * PosNode is a node that has a start and end position.
  */
@@ -32,22 +37,22 @@ abstract class PosNode implements Node<{ start: number, end: number }> {
     value: { start: number, end: number}
     children: PosNode[]
     abstract emit(): string
-    constructor(value: { start: number, end: number}, children: PosNode[]) {
+    constructor(value: Position, children: PosNode[]) {
         this.value = value
         this.children = children
     }
     /** find a node whose span covers a given position */
     find(pos: number): PosNode | undefined {
         if (this.value.start <= pos && pos < this.value.end) {
-        return this
+            return this
         }
         else {
-        for (const child of this.children) {
-            if (child.value.start <= pos && pos < child.value.end) {
-            return child.find(pos)
+            for (const child of this.children) {
+                if (child.value.start <= pos && pos < child.value.end) {
+                    return child.find(pos)
+                }
             }
-        }
-        return undefined
+            return undefined
         }
     }
     /** This is a test of suggesting a name for an inferred return type */

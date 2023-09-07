@@ -11,13 +11,8 @@ function parseLogsFromCsv(text) {
 
 /**
  * @template T
- * @typedef {(t: T) => boolean} Predicate
- */
-
-/**
- * @template T
  * @param {T[]} xs 
- * @param {Predicate<T>} yes 
+ * @param {(t: T) => boolean} yes 
  * @param {(t: T) => boolean} no 
  */
 function trifilter(xs, yes, no) {
